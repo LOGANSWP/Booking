@@ -12,11 +12,11 @@ export default function App() {
       <Routes>
         <Route
           path="/"
-          element={<Layout childern={<p>Home Page</p>}></Layout>}
+          element={<Layout children={<p>Home Page</p>}></Layout>}
         />
         <Route
           path="/search"
-          element={<Layout childern={<p>Search Page</p>}></Layout>}
+          element={<Layout children={<p>Search Page</p>}></Layout>}
         />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
