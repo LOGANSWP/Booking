@@ -2,17 +2,25 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
+import userRoutes from "./routes/users.js";
 
-mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
+if (!process.env.MONGODB_CONNECTION_STRING) {
+  console.error("❌ Missing MONGODB_CONNECTION_STRING in .env");
+  process.exit(1);
+}
+mongoose
+  .connect(process.env.MONGODB_CONNECTION_STRING!)
+  .then(() => console.log("✅ MongoDB connected"))
+  .catch((err) => {
+    console.error("❌ MongoDB connection error:", err);
+  });
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.get("/api/test", async (req: Request, res: Response) => {
-  res.json({ message: "Hello world" });
-});
+app.use("/api/users", userRoutes);
 
 app.listen(7001, () => {
   console.log("Server running on localhost:7001");
