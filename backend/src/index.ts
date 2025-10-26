@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
 import userRoutes from "./routes/users.js";
+import authRoutes from "./routes/auth.js";
 
 if (!process.env.MONGODB_CONNECTION_STRING) {
   console.error("❌ Missing MONGODB_CONNECTION_STRING in .env");
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
 
 app.listen(7001, () => {
   console.log("Server running on localhost:7001");
