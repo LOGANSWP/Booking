@@ -4,6 +4,7 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import userRoutes from "./routes/users.js";
 import authRoutes from "./routes/auth.js";
+import cookieParser from "cookie-parser";
 
 if (!process.env.MONGODB_CONNECTION_STRING) {
   console.error("❌ Missing MONGODB_CONNECTION_STRING in .env");
@@ -17,6 +18,7 @@ mongoose
   });
 
 const app = express();
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
