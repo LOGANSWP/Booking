@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import * as apiClient from "../api-client.js";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ export type SignInFormData = {
 export default function SignIn() {
   const navigate = useNavigate();
   const { showToast } = useAppContext();
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -22,6 +23,7 @@ export default function SignIn() {
   const mutation = useMutation({
     mutationFn: (formData: SignInFormData) => apiClient.signIn(formData),
     onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["validateToken"] });
       showToast({ message: "Sign in Success!", type: "SUCCESS" });
       navigate("/");
     },

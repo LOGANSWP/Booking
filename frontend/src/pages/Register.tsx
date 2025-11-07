@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import * as apiClient from "../api-client.js";
 import { useAppContext } from "../contexts/AppContext.js";
@@ -15,6 +15,7 @@ export type RegisterFormData = {
 export default function Register() {
   const navigate = useNavigate();
   const { showToast } = useAppContext();
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -26,7 +27,8 @@ export default function Register() {
   // explicitly define the mutation function
   const mutation = useMutation({
     mutationFn: (formData: RegisterFormData) => apiClient.register(formData),
-    onSuccess: () => {
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["validateToken"] });
       showToast({ message: "Registration Success!", type: "SUCCESS" });
       navigate("/");
     },
