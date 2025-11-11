@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import * as apiClient from "../api-client.js";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAppContext } from "../contexts/AppContext.js";
 
 export type SignInFormData = {
@@ -68,7 +68,13 @@ export default function SignIn() {
           <span className="text-red-500">{errors.password.message}</span>
         )}
       </label>
-      <span>
+      <span className="flex items-center justify-between">
+        <span className="text-sm">
+          Not Registered?{" "}
+          <Link className="underline text-red-600" to="/register">
+            Create an account here
+          </Link>
+        </span>
         <button
           type="submit"
           className="bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl"
