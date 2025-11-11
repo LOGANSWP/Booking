@@ -11,7 +11,7 @@ if (!process.env.MONGODB_CONNECTION_STRING) {
   process.exit(1);
 }
 mongoose
-  .connect(process.env.MONGODB_CONNECTION_STRING!)
+  .connect(process.env.MONGODB_CONNECTION_STRING)
   .then(() => console.log("✅ MongoDB connected"))
   .catch((err) => {
     console.error("❌ MongoDB connection error:", err);
