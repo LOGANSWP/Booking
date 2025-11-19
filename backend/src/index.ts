@@ -1,10 +1,12 @@
-import express, { Request, Response } from "express";
+import express, { type Request, type Response } from "express";
 import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
 import userRoutes from "./routes/users.js";
 import authRoutes from "./routes/auth.js";
 import cookieParser from "cookie-parser";
+import path from "path";
+import { fileURLToPath } from "url";
 
 if (!process.env.MONGODB_CONNECTION_STRING) {
   console.error("❌ Missing MONGODB_CONNECTION_STRING in .env");
@@ -27,6 +29,11 @@ app.use(
     credentials: true,
   })
 );
+
+// Recreate __dirname in ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
