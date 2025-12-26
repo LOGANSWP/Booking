@@ -6,12 +6,14 @@ import SearchResultsCard from "../components/SearchResultsCard.js";
 import Pagination from "../components/Pagination.js";
 import StarRatingFilter from "../components/StarRatingFilter.js";
 import HotelTypesFilter from "../components/HotelTypesFilter.js";
+import FacilitiesFilter from "../components/FacilitiesFilter.js";
 
 export default function Search() {
   const search = useSearchContext();
   const [page, setPage] = useState<number>(1);
   const [selectedStars, setSelectedStars] = useState<string[]>([]);
   const [selectedHotelTypes, setSelectedHotelTypes] = useState<string[]>([]);
+  const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
 
   const searchParams = {
     destination: search.destination,
@@ -22,6 +24,7 @@ export default function Search() {
     page: page.toString(),
     stars: selectedStars,
     types: selectedHotelTypes,
+    facilities: selectedFacilities,
   };
 
   const { data: hotelData } = useQuery({
@@ -51,6 +54,16 @@ export default function Search() {
     );
   };
 
+  const handleFacilityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const facility = event.target.value;
+
+    setSelectedFacilities((prevFacilities) =>
+      event.target.checked
+        ? [...prevFacilities, facility]
+        : prevFacilities.filter((prevFacility) => prevFacility !== facility)
+    );
+  };
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-[250px_1fr] gap-5">
       <div className="rounded-lg border border-slate-300 p-5 h-fit sticky top-10">
@@ -65,6 +78,10 @@ export default function Search() {
           <HotelTypesFilter
             selectedHotelTypes={selectedHotelTypes}
             onChange={handleHotelTypeChange}
+          />
+          <FacilitiesFilter
+            selectedFacilities={selectedFacilities}
+            onChange={handleFacilityChange}
           />
         </div>
       </div>
