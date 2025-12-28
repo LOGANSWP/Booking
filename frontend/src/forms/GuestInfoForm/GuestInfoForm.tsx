@@ -68,7 +68,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
 
   return (
     <div className="flex flex-col p-4 bg-blue-200 gap-4">
-      <h3 className="text-md font-bold">${pricePerNight}</h3>
+      <h3 className="text-md font-bold">${pricePerNight} per night</h3>
       <form
         onSubmit={
           isLoggedIn ? handleSubmit(onSubmit) : handleSubmit(onSignInClick)
@@ -105,7 +105,7 @@ const GuestInfoForm = ({ hotelId, pricePerNight }: Props) => {
               wrapperClassName="min-w-full"
             />
           </div>
-          <div className="flex bg-white px-2 py-1 gap-2">
+          <div className="flex justify-between bg-white px-2 py-1 gap-2">
             <label className="items-center flex">
               Adults:
               <input
