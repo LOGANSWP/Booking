@@ -214,7 +214,6 @@ router.post(
         return res.status(400).json({ message: "hotel not found" });
       }
 
-      await hotel.save();
       res.status(200).send();
     } catch (error) {
       console.log(error);
